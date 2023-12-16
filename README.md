@@ -40,13 +40,16 @@ You can preview the production build with `npm run preview`.
 
 ## Deploy on Mac M1 (using Docker)
 1. `docker run --rm -it --platform linux/amd64 node:20 bash`
-2. `git clone REPO`
-3. `cd REPO`
-4. `npm install`
-5. `npm i -g firebase-tools`
-6. `firebase login --no-localhost`
-7. `firebase experiments:enable webframeworks`
-8. `firebase init hosting`
-9. `firebase deploy`
-10. `git add firebase.json .firebaserc`
-11. `git commit -m "Add firebase deploy"`
+2. `git config --global user.name "John Doe"`
+3. `git config --global user.email "EMAIL"`
+4. `git clone REPO`
+5. `cd REPO`
+6. `npm install`
+7. `npm i -g firebase-tools`
+8. `firebase login --no-localhost`
+9. `firebase experiments:enable webframeworks`
+10. `firebase init hosting`
+11. `git add firebase.json .firebaserc`
+12. `git commit -m "Add firebase deploy"`
+13. `git push`
+14. `firebase deploy`
