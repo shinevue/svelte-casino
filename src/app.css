@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	
+
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	.hide-scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.hide-scroll {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	min-height: calc(100% + env(safe-area-inset-top));
+	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+		env(safe-area-inset-left);
+	@apply bg-dark font-main;
+}
+
+body {
+	-webkit-animation-delay: 0.1s;
+	-webkit-animation-name: fontfix;
+	-webkit-animation-duration: 0.1s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes fontfix {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* Reset */
+input[type='range'],
+input[type='range']:focus,
+input[type='range']::-webkit-slider-thumb,
+input[type='range']::-webkit-slider-runnable-track,
+input[type='range']::-moz-range-track,
+input[type='range']::-moz-range-thumb {
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+}
+
+input[type='range'] {
+	@apply w-full h-2 bg-orange-dark rounded-full;
+}
+input[type='range']:disabled {
+	@apply bg-stone-600;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+	@apply w-full h-2 bg-orange-dark rounded-full;
+}
+
+input[type='range']::-webkit-slider-thumb {
+	@apply w-5 h-5 bg-white -mt-1.5 rounded-full;
+}
+
+input[type='range']:focus::-webkit-slider-thumb {
+	@apply bg-white outline-2 outline-orange/50;
+}
+
+input[type='range']:focus::-webkit-slider-runnable-track {
+	@apply bg-orange;
+}
+
+input[type='range']:disabled::-webkit-slider-thumb {
+	@apply bg-stone-400;
+}
+
+input[type='range']:disabled::-webkit-slider-runnable-track {
+	@apply bg-stone-600;
+}
+
+input[type='range']::-moz-range-track {
+	@apply w-full h-2 bg-orange-dark rounded-full;
+}
+
+input[type='range']::-moz-range-thumb {
+	@apply w-5 h-5 bg-white -mt-1.5 rounded-full;
+}
+
+input[type='range']:focus::-moz-range-thumb {
+	@apply bg-white outline-2 outline-orange/50;
+}
+
+input[type='range']::-moz-range-progress {
+	@apply h-2 rounded-full bg-orange;
+}
+
+input[type='range']:focus::-moz-range-track {
+	@apply bg-orange-dark;
+}
+
+input[type='range']:disabled::-moz-range-track {
+	@apply bg-stone-600;
+}
+
+input[type='range']:disabled::-moz-range-progress {
+	@apply bg-stone-500;
+}
+
+input[type='range']:disabled::-moz-range-thumb {
+	@apply bg-stone-400;
+}
