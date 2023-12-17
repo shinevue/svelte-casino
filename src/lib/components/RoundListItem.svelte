@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Avatar from '$lib/components/Avatar.svelte';
+
 	export let name: string = '';
 	export let totalPoints: number = 0;
 	export let points: number = 0;
@@ -9,11 +11,7 @@
 	class="flex bg-white border border-1 border-gray-100 p-2.5 rounded-xl justify-between items-center"
 >
 	<div>
-		<img
-			class="w-14 h-14 p-0.5 rounded-full ring-1 ring-gray-300 object-cover"
-			src={img}
-			alt="Bordered avatar"
-		/>
+		<Avatar photoURL={img} />
 	</div>
 	<div class="grow ps-2.5">
 		<p class="font-bold">{name}</p>

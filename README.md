@@ -49,7 +49,11 @@ You can preview the production build with `npm run preview`.
 8. `firebase login --no-localhost`
 9. `firebase experiments:enable webframeworks`
 10. `firebase init hosting`
+    1.  Don't set up Github actions yet
 11. `git add firebase.json .firebaserc`
 12. `git commit -m "Add firebase deploy"`
 13. `git push`
-14. `firebase deploy`
+14. `firebase init hosting:github`
+    1.  Generate service worker key for compute account
+    2.  Add key to Github secrets
+15. `firebase deploy`

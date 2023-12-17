@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { user, userData } from '$lib/firebase';
 	import '../app.css';
+	// PWA
 	import { pwaInfo } from 'virtual:pwa-info';
-
 	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+
+	$user;
+	$userData;
 </script>
 
 <svelte:head>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { getContext } from 'svelte';
+
 	import MenuBottom from '$lib/components/MenuBottom.svelte';
 	import { onMount, onDestroy, afterUpdate } from 'svelte';
 	import { format, formatDuration, intervalToDuration } from 'date-fns';
@@ -15,7 +15,7 @@
 	}
 	let roundActive = true;
 	let timer = null;
-	let countdown: number = getContext('countdown');
+	let countdown = 10;
 
 	onMount(() => {
 		timer = setInterval(() => {

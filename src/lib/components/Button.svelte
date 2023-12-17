@@ -8,6 +8,7 @@
 	type="button"
 	class={disabled ? 'button button-disabled cursor-default' : 'button button-active cursor-pointer'}
 	disabled={disabled || null}
+	on:click
 >
 	<slot />
 </button>
