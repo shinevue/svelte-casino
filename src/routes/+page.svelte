@@ -39,7 +39,7 @@
 			<p class="font-heading text-center text-2xl">353 poäng</p>
 		</div> -->
 
-		<div class="w-full text-center pt-10 pb-10 bg-main-image bg-cover bg-top bg-no-repeat">
+		<div class="w-full text-center pt-10 pb-10 bg-main bg-cover bg-top bg-no-repeat">
 			<p class="font-heading text-2xl uppercase mb-3">Place your bet</p>
 			<div class="font-[900] font-heading text-8xl">
 				{rangeSliderValue}<span class="text-6xl">m</span>
