@@ -16,17 +16,17 @@
 	});
 </script>
 
-<AuthCheck>
-	<div class="mx-auto flex flex-col h-screen">
-		<HeaderSmall>Leaderboard</HeaderSmall>
-		<div class="flex flex-[1] min-h-0 w-full flex-col p-3 bg-almost-white">
-			<div class="flex flex-col gap-2 overflow-auto hide-scroll h-full pb-3" id="rounds">
+<div class="mx-auto flex flex-col h-screen">
+	<HeaderSmall>Leaderboard</HeaderSmall>
+	<div class="flex flex-[1] min-h-0 w-full flex-col p-3 bg-almost-white">
+		<AuthCheck>
+			<div class="flex flex-col gap-2 hide-scroll h-full pb-3">
 				{#each players as { name, photoURL }}
 					<RoundListItem {name} totalPoints={84} points={calculateScore(84, 57)} img={photoURL} />
 				{/each}
 			</div>
-		</div>
+		</AuthCheck>
 	</div>
+</div>
 
-	<MenuBottom />
-</AuthCheck>
+<MenuBottom />

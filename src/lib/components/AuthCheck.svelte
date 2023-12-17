@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { user } from '$lib/firebase';
+	import Button from './Button.svelte';
 </script>
 
 {#if $user}
 	<slot />
 {:else}
-	<p class="text-error text-white text-center">
-		You must be signed in to view this page.
-		<a class="bg-orange text-white font-bold" href="/login">Sign in</a>
-	</p>
+	<div class="p-3 flex flex-col gap-3">
+		<p class="font-bold">You must be signed in to view this page</p>
+		<a href="/login"><Button>Sign in</Button></a>
+	</div>
 {/if}

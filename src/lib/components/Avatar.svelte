@@ -1,5 +1,5 @@
 <script lang="ts">
-	const defaultPhotoUrl = 'img/carl.jpg';
+	const defaultPhotoUrl = '/img/carl.jpg';
 	export let photoURL: string = defaultPhotoUrl;
 	export let alt: string = 'Avatar';
 	export let width: number = 14;

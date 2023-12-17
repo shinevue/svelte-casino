@@ -1,5 +1,5 @@
 <script lang="ts">
-  import HeaderSmall from './HeaderSmall.svelte';
+	import HeaderSmall from './HeaderSmall.svelte';
 
 	import AuthCheck from '$lib/components/AuthCheck.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
@@ -18,11 +18,11 @@
 	}
 </script>
 
-<AuthCheck>
-	<div class="mx-auto flex flex-col h-screen">
-		<HeaderSmall>Profile</HeaderSmall>
-		<div class="flex flex-[1] min-h-0 w-full flex-col bg-almost-white">
-			<div class="flex flex-col gap-2 overflow-auto hide-scroll h-full py-3 px-3" id="rounds">
+<div class="mx-auto flex flex-col h-screen">
+	<HeaderSmall>Profile</HeaderSmall>
+	<div class="flex flex-[1] min-h-0 w-full flex-col bg-almost-white">
+		<AuthCheck>
+			<div class="flex flex-col gap-2 overflow-auto hide-scroll h-full py-3 px-3">
 				<div class="text-center">
 					<div class="mx-auto w-24">
 						<Avatar width={24} height={24} />
@@ -50,11 +50,11 @@
 			</div>
 
 			<div class="p-3"><Button>Save profile</Button></div>
-		</div>
+		</AuthCheck>
 	</div>
+</div>
 
-	<MenuBottom />
-</AuthCheck>
+<MenuBottom />
 
 <style>
 	.h-screen {

@@ -86,7 +86,7 @@
 				const nameFromEmail = result.user.email?.split('@')[0] ?? '';
 				storeUser(result.user.uid, {
 					name: result.user.displayName ?? nameFromEmail,
-					photoURL: result.user.photoURL ?? 'img/carl.jpg'
+					photoURL: result.user.photoURL ?? '/img/carl.jpg'
 				});
 
 				goto('/profile');
@@ -102,7 +102,7 @@
 <div class="h-screen w-full bg-login bg-cover bg-top bg-no-repeat">
 	<div class="w-full h-full p-3 bg-dark/70 flex flex-col gap-2">
 		<h1 class="py-6 w-full">
-			<img src="img/logotype-light.png" alt="Hillclimb Casino" class="text-center" />
+			<img src="/img/logotype-light.png" alt="Hillclimb Casino" class="text-center" />
 		</h1>
 
 		<h2 class="text-2xl font-heading text-white text-center uppercase mt-[45%] mb-3">Sign in</h2>

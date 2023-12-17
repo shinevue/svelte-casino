@@ -78,7 +78,7 @@
 				name="John"
 				totalPoints={84}
 				points={calculateScore(84, 57)}
-				img="img/john.jpg"
+				img="/img/john.jpg"
 			/>
 		</div>
 	</div>
