@@ -19,11 +19,13 @@
 		const name = e.target.value;
 		clearTimeout(debounceTimer);
 
-		debounceTimer = setTimeout(async () => {
-			await updateDoc(doc(db, 'users', $user!.uid), { name: name });
+		if (name.length > 1) {
+			debounceTimer = setTimeout(async () => {
+				await updateDoc(doc(db, 'users', $user!.uid), { name: name });
 
-			nameSaved = true;
-		}, 500);
+				nameSaved = true;
+			}, 500);
+		}
 	}
 
 	async function upload(e: any) {
