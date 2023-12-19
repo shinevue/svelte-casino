@@ -13,6 +13,8 @@ export default {
 				dark: '#1f1c21',
 				orange: '#f7550a',
 				'orange-dark': '#5f1919',
+				pink: '#ff1a5e',
+				'pink-dark': '#5e1936',
 				'almost-white': '#f5f1ed',
 				gray: { 100: '#dbd5de', 200: '#a8a7a8', 300: '#a8a8a9', 900: '#1f1c21' },
 				melon: {

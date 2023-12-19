@@ -16,7 +16,7 @@
 	}
 
 	.button-pink {
-		@apply bg-pink-500 hover:bg-pink-800 focus:outline-none focus:ring-4 focus:ring-pink-300;
+		@apply bg-pink hover:bg-pink-dark focus:outline-none focus:ring-4 focus:ring-melon-300;
 	}
 
 	.button:disabled {
@@ -99,4 +99,8 @@ body {
 	to {
 		opacity: 1;
 	}
+}
+
+.firebase-emulator-warning {
+	display: none;
 }

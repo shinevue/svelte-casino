@@ -83,12 +83,12 @@ input[type='range'].result:disabled::-moz-range-progress {
 
 /* Result slider */
 input[type='range'].result {
-	@apply bg-pink-900;
+	@apply bg-pink-dark;
 }
 
 input[type='range'].result::-webkit-slider-runnable-track,
 input[type='range'].result::-moz-range-track {
-	@apply bg-pink-900;
+	@apply bg-pink-dark;
 }
 
 input[type='range'].result::-webkit-slider-thumb,
@@ -98,17 +98,17 @@ input[type='range'].result::-moz-range-thumb {
 
 input[type='range'].result:focus::-webkit-slider-thumb,
 input[type='range'].result:focus::-moz-range-thumb {
-	@apply outline-pink-800/50;
+	@apply outline-pink-dark/50;
 }
 
 input[type='range'].result:focus::-webkit-slider-runnable-track {
-	@apply bg-pink-500;
+	@apply bg-pink;
 }
 
 input[type='range'].result::-moz-range-progress {
-	@apply bg-pink-500;
+	@apply bg-pink;
 }
 
 input[type='range'].result:focus::-moz-range-track {
-	@apply bg-pink-900;
+	@apply bg-pink-dark;
 }
