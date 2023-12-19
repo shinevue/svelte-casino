@@ -80,13 +80,13 @@
 				// You can check if the user is new or existing:
 				// result.additionalUserInfo.isNewUser
 
-				console.log(result.user);
-
 				// if (result.additionalUserInfo.isNewUser)
 				const nameFromEmail = result.user.email?.split('@')[0] ?? '';
 				storeUser(result.user.uid, {
 					name: result.user.displayName ?? nameFromEmail,
-					photoURL: result.user.photoURL ?? '/img/carl.jpg'
+					photoURL: result.user.photoURL ?? '/img/carl.jpg',
+					// TODO CHANGE THIS BEFORE DEPLOY
+					role: 'admin'
 				});
 
 				goto('/profile');
@@ -108,21 +108,23 @@
 		<h2 class="text-2xl font-heading text-white text-center uppercase mt-[45%] mb-3">Sign in</h2>
 
 		{#if $user}
-			<h2 class="card-title">Welcome, {$user.email}</h2>
-			<p class="text-center text-success">You are logged in</p>
+			<h2 class="text-white text-center">Welcome, {$user.email}</h2>
+			<p class="text-center text-white">You are logged in</p>
 			<!-- <button class="btn btn-warning" on:click={signOutSSR}>Sign out</button> -->
+			{goto('/profile')}
 		{:else}
-			<label for="email" class="font-bold text-white">Email</label>
-			<input
-				type="email"
-				name="email"
-				id="email"
-				placeholder="email@example.com"
-				bind:value={email}
-				class="transition text-dark font-bold rounded-xl text-sm px-5 py-4 w-full grow-0 focus:border-1 focus:border-orange focus:shadow-[0_0_3px_0_#f7550a] focus:outline-none"
-			/>
-
-			<Button on:click={buttonClick}>{buttonText}</Button>
+			<form on:submit|preventDefault>
+				<label for="email" class="font-bold text-white">Email</label>
+				<input
+					type="email"
+					name="email"
+					id="email"
+					placeholder="email@example.com"
+					bind:value={email}
+					class="transition text-dark font-bold rounded-xl text-sm px-5 py-4 w-full grow-0 focus:border-1 focus:border-orange focus:shadow-[0_0_3px_0_#f7550a] focus:outline-none mb-2"
+				/>
+				<Button on:click={buttonClick}>{buttonText}</Button>
+			</form>
 		{/if}
 	</div>
 </div>

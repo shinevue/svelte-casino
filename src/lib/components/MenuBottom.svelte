@@ -1,12 +1,8 @@
-<script>
-	import { onMount, onDestroy, afterUpdate } from 'svelte';
-	import { format, formatDuration, intervalToDuration } from 'date-fns';
-	import RoundListItem from '$lib/components/RoundListItem.svelte';
-	import 'flowbite';
+<script lang="ts">
 	import { goto } from '$app/navigation';
-	const gotoRoute = (event) => {
+	import 'flowbite';
+	const gotoRoute = (event: any) => {
 		const route = `/${event.target.dataset.page}`;
-		console.log(route);
 		goto(route);
 	};
 </script>

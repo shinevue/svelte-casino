@@ -20,6 +20,6 @@
 	{@html webManifest}
 </svelte:head>
 
-<div class="select-none">
+<div class="">
 	<slot />
 </div>

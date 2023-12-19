@@ -6,10 +6,12 @@
 	import { db, type UserData } from '$lib/firebase';
 	import { calculateScore } from '$lib/helpers';
 	import { onMount } from 'svelte';
-	import HeaderSmall from '../profile/HeaderSmall.svelte';
+	import HeaderSmall from '../../lib/components/HeaderSmall.svelte';
 
 	let players: UserData[] = [];
-
+	const getUser = (userId: string) => {
+		return;
+	};
 	onMount(async () => {
 		const querySnapshot = await getDocs(collection(db, 'users'));
 		players = querySnapshot.docs.map((doc) => doc.data());
@@ -22,7 +24,7 @@
 		<AuthCheck>
 			<div class="flex flex-col gap-2 hide-scroll h-full pb-3">
 				{#each players as { name, photoURL }}
-					<RoundListItem {name} totalPoints={84} points={calculateScore(84, 57)} img={photoURL} />
+					<RoundListItem {name} totalPoints={84} points="1st" img={photoURL} />
 				{/each}
 			</div>
 		</AuthCheck>

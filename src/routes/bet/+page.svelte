@@ -1,93 +1,186 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-
+	import AdminCheck from '$lib/components/AdminCheck.svelte';
+	import Countdown from '$lib/components/Countdown.svelte';
 	import MenuBottom from '$lib/components/MenuBottom.svelte';
-	import { onMount, onDestroy, afterUpdate } from 'svelte';
-	import { format, formatDuration, intervalToDuration } from 'date-fns';
-	import RoundListItem from '$lib/components/RoundListItem.svelte';
-	import 'flowbite';
-	import { calculateScore } from '$lib/helpers';
+	import PlacedBetsList from '$lib/components/PlacedBetsList.svelte';
+	import { currentRound, user } from '$lib/firebase';
+	import {
+		endRound,
+		placeBet as placeBetFirestore,
+		placeResult as placeResultFirestore,
+		startRound
+	} from '$lib/game/rounds';
+	import _ from 'lodash';
+	import RangeSlider from '../../lib/components/RangeSlider.svelte';
+
+	let handleRangeChange = (event) => {
+		rangeSliderValue = event.target.value;
+	};
+
+	const placeBet = async () => {
+		placeBetFirestore($currentRound!.roundId, $user!.uid, rangeSliderValue);
+		console.log('Bet placed on round: ', $currentRound?.roundId);
+	};
+
+	const placeResult = async () => {
+		placeResultFirestore($currentRound!.roundId, $user!.uid, rangeSliderValue);
+		console.log('Result placed on round: ', $currentRound?.roundId);
+	};
+
 	let rangeSliderValue = 50; // Initial value
 
-	// Function to handle changes in the range slider
-	function handleRangeChange(event) {
-		rangeSliderValue = event.target.value;
-	}
-	let roundActive = true;
-	let timer = null;
-	let countdown = 10;
+	// Check if the current user has placed a bet in the current round
+	$: betPlaced = $currentRound?.bets
+		? Object.keys($currentRound?.bets).includes($user?.uid)
+		: false;
 
-	onMount(() => {
-		timer = setInterval(() => {
-			countdown -= 1;
-			if (countdown <= 0) {
-				// Countdown finished
-				countdown = 0;
-				roundActive = false;
-			}
-		}, 1000);
-	});
+	// Check if the current user has placed a result in the current round
+	$: resultPlaced = $currentRound?.results
+		? Object.keys($currentRound?.results).includes($user?.uid)
+		: false;
+
+	// Round result
+	$: result = $currentRound?.results ? _.sum(Object.values($currentRound?.results)) : 0;
+
+	// Length of bets in current round
+	$: bets = _.size($currentRound?.bets);
+
+	const devMsg = async (event) => {
+		// const subcollectionRef = collection(currentRound.ref, 'results');
+		// Query a reference to a subcollection
+		// const querySnapshot = await getDocs(collection(currentRound.ref, 'results'));
+		// querySnapshot.forEach((doc) => {
+		// 	// doc.data() is never undefined for query doc snapshots
+		// 	console.log(doc.id, ' => ', doc.data());
+		// });
+	};
 </script>
 
-<div class="mx-auto flex flex-col h-screen">
+<div class="mx-auto flex flex-col h-screen-no-menu">
 	<div class="bg-dark text-white">
-		<!-- <div class="flex justify-between">
-			<p class="font-heading text-center text-2xl">Plats 1</p>
-			<p class="font-heading text-center text-2xl">353 poäng</p>
-		</div> -->
-
 		<div class="w-full text-center pt-10 pb-10 bg-main bg-cover bg-top bg-no-repeat">
-			<p class="font-heading text-2xl uppercase mb-3">Place your bet</p>
+			<p class="font-heading text-2xl uppercase mb-3">
+				{#if $currentRound?.status == 'betting' && !betPlaced}
+					Place your bet
+				{:else if $currentRound?.status == 'betting' && betPlaced}
+					Bet placed
+				{:else if $currentRound?.status == 'judging' && !resultPlaced}
+					Enter result
+				{:else if $currentRound?.status == 'judging' && resultPlaced}
+					Result
+				{:else if $currentRound?.status == 'finished'}
+					Round winner
+				{:else}
+					Waiting for next round
+				{/if}
+			</p>
+
 			<div class="font-[900] font-heading text-8xl">
-				{rangeSliderValue}<span class="text-6xl">m</span>
+				{#if $currentRound?.status == 'judging' && resultPlaced}
+					{result}<span class="text-6xl">m</span>
+				{:else}
+					{rangeSliderValue}<span class="text-6xl">m</span>
+				{/if}
 			</div>
 		</div>
 		<div class="flex flex-col items-center px-3">
 			<div class="w-full py-4">
-				<label for="labels-range-input" class="sr-only">Labels range</label>
-				<input
-					id="default-range"
-					type="range"
-					disabled={!roundActive || null}
-					bind:value={rangeSliderValue}
-					on:input={handleRangeChange}
-					class="w-full h-2 bg-stone-200 accent-orange appearance-none rounded-lg cursor-pointer"
-				/>
-				<div class="inline-flex justify-between w-full font-light mt-2">
-					<span class="text-sm text-gray-300">0m</span>
-					<span class="text-sm text-gray-300 opacity-50">25m</span>
-					<span class="text-sm text-gray-300 opacity-50">50m</span>
-					<span class="text-sm text-gray-300 opacity-50">75m</span>
-					<span class="text-sm text-gray-300">100m</span>
-				</div>
+				{#if $currentRound?.status == 'betting'}
+					<RangeSlider
+						bind:rangeValue={rangeSliderValue}
+						bind:onRangeChange={handleRangeChange}
+						bind:roundStatus={$currentRound.status}
+						bind:disabled={betPlaced}
+					/>
+				{:else if $currentRound?.status == 'judging'}
+					<RangeSlider
+						bind:rangeValue={rangeSliderValue}
+						bind:onRangeChange={handleRangeChange}
+						bind:roundStatus={$currentRound.status}
+						bind:disabled={resultPlaced}
+					/>
+				{:else}
+					<RangeSlider
+						bind:rangeValue={rangeSliderValue}
+						bind:onRangeChange={handleRangeChange}
+						roundStatus="inactive"
+						disabled={true}
+					/>
+				{/if}
 			</div>
-			<Button id="bet-button" disabled={!roundActive}
-				>{roundActive ? 'Place bet' : 'Bet placed'}</Button
-			>
-			<div class="font-light py-3">
-				<p class={countdown > 10 || countdown === 0 ? 'text-stone-400' : 'text-red-500'}>
-					{countdown > 0 ? format(new Date(countdown * 1000), 'mm:ss') : 'Round locked'}
-				</p>
-			</div>
+
+			{#if $currentRound?.status == 'betting'}
+				<button
+					class="button button-orange w-full"
+					disabled={$currentRound?.status != 'betting' || betPlaced}
+					on:click={placeBet}
+				>
+					{$currentRound?.betsLocked || betPlaced ? 'Bet placed' : 'Place bet'}
+				</button>
+			{:else if $currentRound?.status == 'judging'}
+				<button
+					class="button button-pink w-full"
+					disabled={$currentRound?.status != 'judging' || resultPlaced}
+					on:click={placeResult}
+				>
+					{resultPlaced ? 'Result submitted' : 'Submit result'}
+				</button>
+			{/if}
+
+			<Countdown />
 		</div>
 	</div>
 	<div class="flex flex-[1] min-h-0 w-full flex-col px-3 bg-almost-white">
-		<div class="flex flex-col gap-2 overflow-auto hide-scroll h-full pb-3" id="rounds">
-			<h3 class="font-bold mt-2">Previous rounds</h3>
-			<RoundListItem
-				name="John"
-				totalPoints={84}
-				points={calculateScore(84, 57)}
-				img="/img/john.jpg"
-			/>
-		</div>
+		<PlacedBetsList bind:resultPlaced bind:result />
 	</div>
+	<p class="text-green-500">
+		{currentRound.ref}
+	</p>
+	<AdminCheck>
+		<div class="relative w-full">
+			<div
+				class="bg-stone-300 text-xs font-mono absolute bottom-[1rem] w-[calc(100%-2rem)] left-[1rem] rounded-lg p-3 grid grid-cols-2 gap-2"
+			>
+				<p class="grid grid-cols-2 overflow-scroll auto-rows-min">
+					<span class="font-bold col-span-full">$currentRound</span>
+					<span>ID: </span>
+					<span>{$currentRound?.roundId}</span>
+					<span>endTime: </span>
+					<span>{$currentRound?.endTime}</span>
+					<span>isActive:</span>
+					<span>{$currentRound?.isActive}</span>
+					<span>result:</span>
+					<span>{$currentRound?.result}</span>
+					<span>winningBet:</span>
+					<span>{$currentRound?.winningBet}</span>
+					<span>status:</span>
+					<span>{$currentRound?.status}</span>
+				</p>
+				<p class="grid grid-cols-2 auto-rows-min">
+					<span class="font-bold col-span-full">Other data</span>
+					<span>betPlaced:</span>
+					<span>{betPlaced}</span>
+					<span>resultPlaced:</span>
+					<span>{resultPlaced}</span>
+					<span>bets:</span>
+					<span>{bets}</span>
+					<span>result:</span>
+					<span>{result}</span>
+				</p>
+				<button
+					on:click={startRound}
+					class="bg-green-500 hover:bg-green-400 p-3 grow rounded-lg cursor-pointer"
+					>Start round</button
+				>
+				<button
+					on:click={endRound}
+					class="bg-red-500 hover:bg-red-400 p-3 grow rounded-lg cursor-pointer">End round</button
+				>
+
+				<button on:click={devMsg}>Bets</button>
+			</div>
+		</div>
+	</AdminCheck>
 </div>
 
 <MenuBottom />
-
-<style>
-	.h-screen {
-		height: calc(100vh - 4rem) !important;
-	}
-</style>

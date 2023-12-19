@@ -1,6 +1,6 @@
 export interface Bet {
-	round: number;
-	user: number;
+	roundId: string;
+	userId: string;
 	bet: number;
-	result: number;
+	result: number | null;
 }

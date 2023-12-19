@@ -1,8 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { doc, getFirestore, onSnapshot } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged, type User } from 'firebase/auth';
+import { connectAuthEmulator, getAuth, onAuthStateChanged, type User } from 'firebase/auth';
+import { connectFirestoreEmulator, doc, getFirestore, onSnapshot } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { derived, writable, type Readable } from 'svelte/store';
+import type { CurrentRound } from './models/round.model';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyBRBeBYDrQoS72LLLXkt6HA0N57Y-7VpdA',
@@ -19,6 +20,10 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 export const auth = getAuth();
 export const storage = getStorage();
+
+// Initialize emulators
+connectFirestoreEmulator(db, '127.0.0.1', 8080);
+connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
 
 /**
  * @returns a store with the current firebase user
@@ -77,6 +82,7 @@ export function docStore<T>(path: string) {
 export interface UserData {
 	name: string;
 	photoURL: string;
+	role: string;
 }
 
 export const userData: Readable<UserData | null> = derived(user, ($user, set) => {
@@ -86,3 +92,5 @@ export const userData: Readable<UserData | null> = derived(user, ($user, set) =>
 		set(null);
 	}
 });
+
+export const currentRound = docStore<CurrentRound>('rounds/currentRound');
