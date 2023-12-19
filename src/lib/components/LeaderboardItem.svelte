@@ -28,7 +28,7 @@
 	.position {
 		@apply font-bold rounded-lg bg-dark w-12 p-2 text-center text-white;
 	}
-	.leaderboard-item:nth-child(-n + 2) .position {
+	.leaderboard-item:nth-child(-n + 3) .position {
 		@apply bg-orange;
 	}
 </style>
