@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import RoundListItem from '$lib/components/RoundListItem.svelte';
 	import { currentRound, db } from '$lib/firebase';
 	import { calculateScore } from '$lib/helpers';
-	import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-	import type { User } from '$lib/models/user.model';
-	import AnimatedRoute from './AnimatedRoute.svelte';
+	import { collection, getDocs } from 'firebase/firestore';
 	import _ from 'lodash';
+	import { onMount } from 'svelte';
 
 	export let resultPlaced: boolean | null = null;
 	export let result: number = 0;

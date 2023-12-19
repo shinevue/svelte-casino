@@ -62,14 +62,15 @@ export const placeResult = async (
 export const startRound = async () => {
 	// TODO batch set
 	const currentDate = new Date();
-	const endTime = addSeconds(currentDate, 30);
+	// TODO Change back to 30 sec
+	const endTime = addSeconds(currentDate, 5);
 
 	const roundData: Round = {
 		endTime: endTime,
 		isActive: true,
 		result: null,
 		winningBet: null,
-		betsLocked: false,
+		betsLocked: false
 	};
 
 	const round = await addDoc(collection(db, 'rounds'), roundData);
@@ -77,7 +78,7 @@ export const startRound = async () => {
 	const currentRoundData: CurrentRound = {
 		roundId: round.id,
 		status: 'betting',
-    bets: {},
+		bets: {},
 		results: {},
 		...roundData
 	};
@@ -90,5 +91,6 @@ export const startRound = async () => {
 	// Change round status after 30 seconds
 	setTimeout(async () => {
 		await updateDoc(doc(db, 'rounds', 'currentRound'), { status: 'judging' });
-	}, 30000);
+	}, 5000);
+	// TODO Change back to 30 sec
 };
