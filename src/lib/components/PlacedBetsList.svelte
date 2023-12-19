@@ -78,6 +78,6 @@
 			</div>
 		{/each}
 	{:else}
-		<p>Waiting for bets...</p>
+		<p>{$currentRound?.status == 'betting' ? 'Waiting for bets...' : 'No bets placed.'}</p>
 	{/if}
 </div>
