@@ -86,7 +86,7 @@
 					name: result.user.displayName ?? nameFromEmail,
 					photoURL: result.user.photoURL ?? '/img/carl.jpg',
 					// TODO CHANGE THIS BEFORE DEPLOY
-					role: 'admin'
+					role: 'user'
 				});
 
 				goto('/profile');

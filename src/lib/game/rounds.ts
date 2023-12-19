@@ -63,7 +63,7 @@ export const startRound = async () => {
 	// TODO batch set
 	const currentDate = new Date();
 	// TODO Change back to 30 sec
-	const endTime = addSeconds(currentDate, 5);
+	const endTime = addSeconds(currentDate, 30);
 
 	const roundData: Round = {
 		endTime: endTime,
@@ -91,6 +91,6 @@ export const startRound = async () => {
 	// Change round status after 30 seconds
 	setTimeout(async () => {
 		await updateDoc(doc(db, 'rounds', 'currentRound'), { status: 'judging' });
-	}, 5000);
+	}, 30000);
 	// TODO Change back to 30 sec
 };
