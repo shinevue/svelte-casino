@@ -40,11 +40,13 @@
 		: false;
 
 	// Round result
-	$: result = $currentRound?.results ? _.sum(Object.values($currentRound?.results)) : 0;
+	$: result = $currentRound?.results ? _.round(_.mean(Object.values($currentRound?.results))) : 0;
 
 	// Length of bets in current round
 	$: bets = _.size($currentRound?.bets);
-
+	// const _setJudging = async()=>{
+	// 	$currentRound.
+	// }
 	const devMsg = async (event) => {
 		// const subcollectionRef = collection(currentRound.ref, 'results');
 		// Query a reference to a subcollection
@@ -133,13 +135,11 @@
 	<div class="flex flex-[1] min-h-0 w-full flex-col px-3 bg-almost-white">
 		<PlacedBetsList bind:resultPlaced bind:result />
 	</div>
-	<p class="text-green-500">
-		{currentRound.ref}
-	</p>
+
 	<AdminCheck>
 		<div class="relative w-full">
 			<div
-				class="bg-stone-300 text-xs font-mono absolute bottom-[1rem] w-[calc(100%-2rem)] left-[1rem] rounded-lg p-3 grid grid-cols-2 gap-2"
+				class="bg-[rgba(255,255,255,.5)] border border-gray-200 text-xs font-mono absolute bottom-[1rem] w-[calc(100%-2rem)] left-[1rem] rounded-lg p-3 grid grid-cols-2 gap-2"
 			>
 				<p class="grid grid-cols-2 overflow-scroll auto-rows-min">
 					<span class="font-bold col-span-full">$currentRound</span>
@@ -178,6 +178,7 @@
 				>
 
 				<button on:click={devMsg}>Bets</button>
+				<!-- <button on:click={_setJudging}>Set judging</button> -->
 			</div>
 		</div>
 	</AdminCheck>
