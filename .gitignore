@@ -11,3 +11,6 @@ vite.config.ts.timestamp-*
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+src/lib/data/bets.json
+src/lib/data/rounds.json
+src/lib/data/users.json
