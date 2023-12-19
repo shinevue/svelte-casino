@@ -53,7 +53,6 @@ exports.updateScores = functions.firestore
 		if (change.before.get('result') != change.after.get('result')) {
 			const batch = db.batch();
 			let scores = {};
-			const roundId = context.params.roundId;
 			logger.info('Updating leaderboard');
 
 			try {
