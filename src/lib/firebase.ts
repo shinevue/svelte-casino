@@ -22,8 +22,8 @@ export const auth = getAuth();
 export const storage = getStorage();
 
 // Initialize emulators
-connectFirestoreEmulator(db, '127.0.0.1', 8080);
-connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+// connectFirestoreEmulator(db, '127.0.0.1', 8080);
+// connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
 
 /**
  * @returns a store with the current firebase user
