@@ -4,8 +4,8 @@ export default {
 	theme: {
 		extend: {
 			backgroundImage: {
-				main: "url('img/bg-main.jpg')",
-				login: "url('img/bg-login.jpg')"
+				main: "url('/img/bg-main.jpg')",
+				login: "url('/img/bg-login.jpg')"
 			},
 			colors: {
 				transparent: 'transparent',
