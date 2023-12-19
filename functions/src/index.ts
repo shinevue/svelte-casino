@@ -23,7 +23,7 @@ import _ = require('lodash');
 // });
 
 const calculateScore = (bet: number, result: number, max = 100) => {
-	return max - Math.abs(bet - result);
+	return _.round(max - Math.abs(bet - result));
 };
 
 admin.initializeApp();
